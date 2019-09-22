@@ -14,6 +14,19 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 
 # Create your views here.
 
+# class ProductListViewSchema(AutoSchema):
+#     def get_manual_fields(self, path, method):
+#         extra_fields = []
+#         if method.lower() in ['post', 'put']:
+#             extra_fields = [
+#                 coreapi.Field('name', 'description', 'price', )
+#             ]
+#         manual_fields = super().get_manual_fields(path, method)
+#         return manual_fields + extra_fields
+# #
+#
+#
+
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 1
@@ -40,27 +53,9 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 
-# import coreapi
-# from rest_framework.schemas import AutoSchema
-#
-
-
-#
-# class ProductListViewSchema(AutoSchema):
-#     def get_manual_fields(self, path, method):
-#         extra_fields = []
-#         if method.lower() in ['post', 'put']:
-#             extra_fields = [
-#                 coreapi.Field('name', 'description', 'price', )
-#             ]
-#         manual_fields = super().get_manual_fields(path, method)
-#         return manual_fields + extra_fields
-# #
-#
-#
-
 class ProductCreateView(generics.CreateAPIView):
     serializer_class = ProductDetailSerializers
+    permission_classes = [IsLoggedInUserOrAdmin]
 
 
 class ProductListView(generics.ListAPIView):
@@ -79,6 +74,6 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProductDetailSerializers
     queryset = Product.objects.all()
 
-    # редактировать запись может только тот кто создал
+    permission_classes = [IsLoggedInUserOrAdmin]
 
 

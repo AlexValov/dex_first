@@ -8,9 +8,17 @@ from rest_framework.views import APIView
 from rest_framework import generics
 from billboardapp.serializers import ProductDetailSerializers, ProductListalizers
 from billboardapp.models import Product
+from rest_framework.pagination import PageNumberPagination
 
 
 # Create your views here.
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 1
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -31,19 +39,19 @@ class UserViewSet(viewsets.ModelViewSet):
 # import coreapi
 # from rest_framework.schemas import AutoSchema
 #
-#
-#
+
+
 #
 # class ProductListViewSchema(AutoSchema):
 #     def get_manual_fields(self, path, method):
 #         extra_fields = []
 #         if method.lower() in ['post', 'put']:
 #             extra_fields = [
-#                 coreapi.Field('name', 'description', 'price')
+#                 coreapi.Field('name', 'description', 'price', )
 #             ]
 #         manual_fields = super().get_manual_fields(path, method)
 #         return manual_fields + extra_fields
-#
+# #
 #
 #
 
@@ -55,6 +63,7 @@ class ProductListView(generics.ListAPIView):
     # schema = ProductListViewSchema()
     serializer_class = ProductListalizers
     queryset = Product.objects.all()
+    pagination_class = StandardResultsSetPagination
 
 
 
@@ -65,3 +74,5 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
 
     # редактировать запись может только тот кто создал
+
+

@@ -10,11 +10,11 @@ from rest_framework_swagger.views import get_swagger_view
 router = routers.DefaultRouter()
 router.register('users', UserViewSet)
 
-# schema_view = get_swagger_view(title='DEX_test')
+schema_view = get_swagger_view(title='DEX_test')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', schema_view),
+    path('', schema_view),
     path('', include(router.urls)),
     path('api/billboard/', include('billboardapp.urls')),
     path('accounts/', include('rest_framework.urls')),

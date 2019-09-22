@@ -9,6 +9,7 @@ from rest_framework import generics
 from billboardapp.serializers import ProductDetailSerializers, ProductListalizers
 from billboardapp.models import Product
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 
 # Create your views here.
@@ -23,6 +24,7 @@ class StandardResultsSetPagination(PageNumberPagination):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    pagination_class = StandardResultsSetPagination
 
     def get_permissions(self):
         permission_classes = []
@@ -64,6 +66,8 @@ class ProductListView(generics.ListAPIView):
     serializer_class = ProductListalizers
     queryset = Product.objects.all()
     pagination_class = StandardResultsSetPagination
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['name', 'description']
 
 
 

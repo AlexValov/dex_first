@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-# from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView, )
+from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView, )
 
 from rest_framework import routers
 from billboardapp.views import UserViewSet
@@ -18,5 +18,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api/billboard/', include('billboardapp.urls')),
     path('accounts/', include('rest_framework.urls')),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
 ]

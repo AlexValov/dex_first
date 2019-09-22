@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from billboardapp.models import Product
-
 from django.contrib.auth import get_user_model
 
 UserModel = get_user_model()
@@ -26,12 +25,9 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-
-
 class ProductDetailSerializers(serializers.ModelSerializer):
     # при каждом запросе пользователь сам создавался, пользователь который создает автоматически прикрепляется к записи
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
 
     class Meta:
         model = Product
@@ -41,4 +37,4 @@ class ProductDetailSerializers(serializers.ModelSerializer):
 class ProductListalizers(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('id', 'name', 'user')
+        fields = ('id', 'name', 'user', 'description')

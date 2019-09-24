@@ -1,10 +1,8 @@
 from billboardapp.models import User
-from rest_framework.response import Response
 from billboardapp.serializers import UserSerializer
 from rest_framework import viewsets
 from rest_framework.permissions import (AllowAny, IsAuthenticated)
 from billboardapp.permissions import IsLoggedInUserOrAdmin, IsAdminUser
-from rest_framework.views import APIView
 from rest_framework import generics
 from billboardapp.serializers import ProductDetailSerializers, ProductListalizers
 from billboardapp.models import Product
@@ -26,7 +24,6 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 # #
 #
 #
-
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 1
@@ -52,11 +49,9 @@ class UserViewSet(viewsets.ModelViewSet):
         return [permission() for permission in permission_classes]
 
 
-
 class ProductCreateView(generics.CreateAPIView):
     serializer_class = ProductDetailSerializers
     permission_classes = [IsLoggedInUserOrAdmin]
-
 
 class ProductListView(generics.ListAPIView):
     # schema = ProductListViewSchema()
@@ -66,14 +61,11 @@ class ProductListView(generics.ListAPIView):
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['name', 'description']
 
-
-
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     # schema = ProductListViewSchema()
 
     serializer_class = ProductDetailSerializers
     queryset = Product.objects.all()
-
     permission_classes = [IsLoggedInUserOrAdmin]
 
 

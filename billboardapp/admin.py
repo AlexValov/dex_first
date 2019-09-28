@@ -1,3 +1,6 @@
 from django.contrib import admin
+from billboardapp.models import User, Product
 
-# Register your models here.
+
+admin.site.register(Product)
+admin.site.register(User)

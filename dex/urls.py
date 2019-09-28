@@ -13,10 +13,10 @@ schema_view = get_swagger_view(title='DEX_test')
 urlpatterns = [
     path('', schema_view),
     path('admin/', admin.site.urls),
+    path('accounts/', include('rest_framework.urls')),
     path('api/v1/auth/', include(router.urls)),
-    path('api/v1/accounts/', include('rest_framework.urls')),
-    path('api/v1/billboard/', include('billboardapp.urls')),
-    path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/v1/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/v1/billboardapp/', include('billboardapp.urls')),
+    # path('api/v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('api/v1/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
 ]

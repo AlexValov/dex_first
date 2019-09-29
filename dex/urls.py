@@ -5,6 +5,7 @@ from billboardapp.views import UserViewSet
 from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView)
 from rest_framework_swagger.views import get_swagger_view
 
+
 router = routers.DefaultRouter()
 router.register('users', UserViewSet)
 

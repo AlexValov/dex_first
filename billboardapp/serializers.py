@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from billboardapp.models import Product, User
-
+from billboardapp.models import User, Product
 
 
 class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = ('id', 'first_name', 'last_name', 'email', 'password')
@@ -18,16 +18,24 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class ProductDetailSerializers(serializers.ModelSerializer):
-    # пользователь который создает автоматически прикрепляется к записи
+class ProductDetailSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Product
         fields = ('name', 'description', 'image', 'price', 'user', 'date_pub')
 
+        extra_kwargs = {
+            'name': {'max_length': 50, 'required': True},
+            'description': {'max_length': 500, 'required': True},
+            'image': {'max_length': 15, 'allow_empty_file': False},
+            'price': {'min_value': 0, 'required': True},
+            'date_pub': {'default_timezone': None}
+        }
 
-class ProductListSerializers(serializers.ModelSerializer):
-     class Meta:
+
+class ProductListSerializer(serializers.ModelSerializer):
+
+    class Meta:
         model = Product
         fields = ('id', 'name', 'price', 'date_pub')

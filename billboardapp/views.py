@@ -22,7 +22,7 @@ class UserViewSet(viewsets.ModelViewSet):
         elif self.action == 'retrieve' or self.action == 'update' or self.action == 'partial_update':
             permission_classes = [IsOwnerOrReadOnly, IsAdminUser]
         elif self.action == 'list' or self.action == 'destroy':
-            permission_classes = [IsAuthenticated]
+            permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
 
 
